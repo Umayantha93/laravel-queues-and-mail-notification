@@ -16,9 +16,11 @@ class WelcomeMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+
+     public $user;
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -31,23 +33,30 @@ class WelcomeMail extends Mailable
         );
     }
 
+    public function build()
+    {
+        return $this->from('laravel.registration@gmail.com')
+                    ->subject('Welcome to Our Platform')
+                    ->view('emails.welcome')
+                    ->with(['user' => $this->user]);
+    }
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'view.name',
+    //     );
+    // }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
+    // /**
+    //  * Get the attachments for the message.
+    //  *
+    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+    //  */
+    // public function attachments(): array
+    // {
+    //     return [];
+    // }
 }
